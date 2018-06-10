@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainFragment">
+    <!--第一行-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="horizontal">
+        <!--第一块-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="#0091ea"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:tint="@android:color/white"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_assignment_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textSize="24sp"
+                android:text="读文字"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+        <!--第二块-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:background="#4d69ff"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:tint="@android:color/white"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_link_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textSize="24sp"
+                android:text="读链接"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--第二行-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+        <!--第三块-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="#2f9833"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:tint="@android:color/white"
+                android:layout_gravity="center"
+                android:src="@drawable/wechat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textSize="24sp"
+                android:text="读公众号"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+        <!--第四块-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:background="#777"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="56sp"
+                android:text="@string/coding" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textSize="24sp"
+                android:text="敬请期待"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
