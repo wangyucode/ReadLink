@@ -13,6 +13,7 @@
         android:orientation="horizontal">
         <!--第一块-->
         <LinearLayout
+            android:id="@+id/ll_read_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -38,6 +39,7 @@
         </LinearLayout>
         <!--第二块-->
         <LinearLayout
+            android:id="@+id/ll_read_link"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

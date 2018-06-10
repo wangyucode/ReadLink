@@ -1,12 +1,14 @@
 package cn.wycode.aidu
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +37,13 @@ class MainFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        ll_read_text.setOnClickListener { startActivity(Intent(context,TextActivity::class.java)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
