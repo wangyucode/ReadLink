@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), MainFragment.OnFragmentInteractionList
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fl_main_container, mainFragment, "main")
-                .add(R.id.fl_main_container, aboutFragment, "about")
+                .add(R.id.fl_main_container, aboutFragment, "setting")
                 .hide(aboutFragment)
                 .commit()
 

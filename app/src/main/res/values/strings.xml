@@ -2,9 +2,10 @@
     <string name="app_name">AI读文</string>
     <string name="title_home">读文</string>
     <string name="title_about">关于</string>
+    <string name="title_setting">设置</string>
 
     <!-- fragment -->
     <string name="hello_main_fragment">读文</string>
-    <string name="hello_about_fragment">关于</string>
+    <string name="hello_setting_fragment">设置</string>
     <string name="coding"><![CDATA[</>]]></string>
 </resources>
