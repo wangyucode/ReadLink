@@ -6,6 +6,12 @@ import android.os.Bundle
 import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.TtsMode
 import kotlinx.android.synthetic.main.activity_text.*
+import android.content.ComponentName
+import android.content.Context
+import android.os.IBinder
+import android.content.ServiceConnection
+
+
 
 class TextActivity : AppCompatActivity() {
 
@@ -13,24 +19,35 @@ class TextActivity : AppCompatActivity() {
     val AppKey = "sH8rGkPvBgjVPEsn03mGf3bT"
     val AppSecret = "Ec0aUGa8kgKlnKkclNcBScKSqDuRu2vy"
 
+    var mService: PlayService? = null
+    var mBound = false
+
+    private val mConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName,
+                                        service: IBinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            val binder = service as PlayService.PlayServiceBinder
+            mService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            mBound = false
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text)
 
-        btn_read.setOnClickListener {
-            val intent = Intent(this,PlayService::class.java)
-            intent.putExtra("text",editText.text.toString())
-            startService(intent)
+        val intent = Intent(this, PlayService::class.java)
+        bindService(intent,mConnection, Context.BIND_AUTO_CREATE)
 
-//            var mSpeechSynthesizer: SpeechSynthesizer = SpeechSynthesizer.getInstance()
-//            mSpeechSynthesizer.setContext(this)
-//            //mSpeechSynthesizer.setSpeechSynthesizerListener(this) //listener是SpeechSynthesizerListener 的实现类，需要实现您自己的业务逻辑。SDK合成后会对这个类的方法进行回调。
-//            mSpeechSynthesizer.setAppId(AppId)
-//            mSpeechSynthesizer.setApiKey(AppKey, AppSecret)
-//            mSpeechSynthesizer.auth(TtsMode.ONLINE)
-//            mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "0")
-//            mSpeechSynthesizer.initTts(TtsMode.ONLINE)
-//            mSpeechSynthesizer.speak(editText.text.toString())
+        btn_read.setOnClickListener {
+            if(mBound) {
+                mService!!.speakText(editText.text.toString())
+            }
         }
     }
 }

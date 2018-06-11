@@ -47,40 +47,37 @@ class PlayService : Service(), SpeechSynthesizerListener {
         mSpeechSynthesizer.initTts(TtsMode.ONLINE)
     }
 
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent != null) {
-            mSpeechSynthesizer.speak(intent.getStringExtra("text"))
-        }
-        return super.onStartCommand(intent, flags, startId)
+    fun speakText(text:String){
+        mSpeechSynthesizer.speak(text)
     }
 
+
     override fun onSynthesizeStart(p0: String?) {
-        Log.d("wy",p0)
+        Log.d("wy", "onSynthesizeStart-->$p0")
     }
 
     override fun onSpeechFinish(p0: String?) {
-        Log.d("wy",p0)
+        Log.d("wy","onSpeechFinish-->$p0")
     }
 
     override fun onSpeechProgressChanged(p0: String?, p1: Int) {
-        Log.d("wy",p0)
+        Log.d("wy","onSpeechProgressChanged-->$p0,$p1")
     }
 
     override fun onSynthesizeFinish(p0: String?) {
-        Log.d("wy",p0)
+        Log.d("wy","onSynthesizeFinish-->$p0")
     }
 
     override fun onSpeechStart(p0: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy","onSpeechStart-->$p0")
     }
 
     override fun onSynthesizeDataArrived(p0: String?, p1: ByteArray?, p2: Int) {
-        Log.d("wy",p0)
+        Log.d("wy","onSynthesizeDataArrived-->$p0,$p2")
     }
 
     override fun onError(p0: String?, p1: SpeechError?) {
-        Log.d("wy",p0)
+        Log.d("wy","onError-->$p0,$p1")
     }
 
 
