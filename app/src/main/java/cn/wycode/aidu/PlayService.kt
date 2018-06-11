@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Binder
 import android.os.IBinder
+import android.util.Log
 import com.baidu.tts.client.SpeechError
 import com.baidu.tts.client.SpeechSynthesizer
 import com.baidu.tts.client.SpeechSynthesizerListener
@@ -55,19 +56,19 @@ class PlayService : Service(), SpeechSynthesizerListener {
     }
 
     override fun onSynthesizeStart(p0: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy",p0)
     }
 
     override fun onSpeechFinish(p0: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy",p0)
     }
 
     override fun onSpeechProgressChanged(p0: String?, p1: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy",p0)
     }
 
     override fun onSynthesizeFinish(p0: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy",p0)
     }
 
     override fun onSpeechStart(p0: String?) {
@@ -75,11 +76,11 @@ class PlayService : Service(), SpeechSynthesizerListener {
     }
 
     override fun onSynthesizeDataArrived(p0: String?, p1: ByteArray?, p2: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy",p0)
     }
 
     override fun onError(p0: String?, p1: SpeechError?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("wy",p0)
     }
 
 
