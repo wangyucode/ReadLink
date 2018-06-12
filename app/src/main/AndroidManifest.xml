@@ -23,12 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TextActivity" />
+        <activity
+            android:name=".TextActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <service
             android:name=".PlayService"
-            android:enabled="true"
-            android:exported="true"></service>
+            android:enabled="true" />
     </application>
 
 </manifest>

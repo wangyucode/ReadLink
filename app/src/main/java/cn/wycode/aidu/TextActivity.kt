@@ -1,25 +1,36 @@
 package cn.wycode.aidu
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
+import android.content.*
 import android.os.Bundle
 import android.os.IBinder
+import android.support.v4.content.LocalBroadcastManager
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import kotlinx.android.synthetic.main.activity_text.*
 
 
 class TextActivity : AppCompatActivity() {
 
-    val AppId = "11382258"
-    val AppKey = "sH8rGkPvBgjVPEsn03mGf3bT"
-    val AppSecret = "Ec0aUGa8kgKlnKkclNcBScKSqDuRu2vy"
-
     var mService: PlayService? = null
     var mBound = false
+
+    var loadingAlert: AlertDialog? = null
+
+    private lateinit var localBroadcastManager: LocalBroadcastManager
+
+    inner class PlayReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d("wy", "onReceive")
+            when (intent?.getIntExtra(EXTRA_PLAYER_WHAT, 0)) {
+                EXTRA_PLAYER_WHAT_SYN_FINISH -> loadingAlert?.dismiss()
+            }
+        }
+    }
+
+    private var playReceiver = PlayReceiver()
 
     private val mConnection = object : ServiceConnection {
 
@@ -42,19 +53,29 @@ class TextActivity : AppCompatActivity() {
 
         val intent = Intent(this, PlayService::class.java)
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
-        val  view:PlayerView = findViewById<PlayerView>(R.id.view_player)
 
-        view.setOnPlayOrPauseClickedListener(View.OnClickListener {
+        view_player.setOnPlayOrPauseClickedListener(View.OnClickListener {
             if (mBound) {
                 mService?.speakText(editText.text.toString())
+                if (loadingAlert == null)
+                    loadingAlert = AlertDialog.Builder(this)
+                            .setTitle("正在生成语音...")
+                            .setView(ProgressBar(this))
+                            .create()
+
+                loadingAlert?.show()
             }
         })
 
-//        btn_read.setOnClickListener {
-//            if(mBound) {
-//                mService!!.speakText(editText.text.toString())
-//            }
-//        }
+        localBroadcastManager = LocalBroadcastManager.getInstance(this)
+        localBroadcastManager.registerReceiver(playReceiver, IntentFilter(ACTION_PLAYER_EVENT))
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        localBroadcastManager.unregisterReceiver(playReceiver)
+    }
+
 
 }

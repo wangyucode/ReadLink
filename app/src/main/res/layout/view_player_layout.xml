@@ -8,18 +8,37 @@
     android:orientation="horizontal"
     android:background="#aa3d5afe">
 
-    <TextView
-        android:id="@+id/text_content"
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_margin="8dp"
-        android:textColor="#fff"
-        android:text="暂无播放内容..."/>
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#fff"
+            android:text="停止中"/>
+
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ddd"
+            android:layout_marginTop="4dp"
+            android:textSize="12dp"
+            android:text="暂无播放内容..."/>
+    </LinearLayout>
+
+
 
     <Button
         android:id="@+id/btn_play_or_pause"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@drawable/play"/>
+
 </LinearLayout>
