@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ddd"
-    android:padding="16dp"
     tools:context=".TextActivity">
 
     <EditText
@@ -20,14 +19,15 @@
         android:hint="请输入要朗读的文字"
         android:inputType="textMultiLine"
         android:padding="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/btn_read"
+
+    <cn.wycode.aidu.PlayerView
+        android:id="@+id/view_player"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/bg_button"
-        android:textColor="@android:color/white"
-        android:text="朗读" />
+        android:layout_marginTop="12dp"/>
 </LinearLayout>

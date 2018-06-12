@@ -1,16 +1,15 @@
 package cn.wycode.aidu
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import com.baidu.tts.client.SpeechSynthesizer
-import com.baidu.tts.client.TtsMode
-import kotlinx.android.synthetic.main.activity_text.*
 import android.content.ComponentName
 import android.content.Context
-import android.os.IBinder
+import android.content.Intent
 import android.content.ServiceConnection
-
+import android.os.Bundle
+import android.os.IBinder
+import android.support.v7.app.AppCompatActivity
+import android.util.AttributeSet
+import android.view.View
+import kotlinx.android.synthetic.main.activity_text.*
 
 
 class TextActivity : AppCompatActivity() {
@@ -42,12 +41,20 @@ class TextActivity : AppCompatActivity() {
         setContentView(R.layout.activity_text)
 
         val intent = Intent(this, PlayService::class.java)
-        bindService(intent,mConnection, Context.BIND_AUTO_CREATE)
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
+        val  view:PlayerView = findViewById<PlayerView>(R.id.view_player)
 
-        btn_read.setOnClickListener {
-            if(mBound) {
-                mService!!.speakText(editText.text.toString())
+        view.setOnPlayOrPauseClickedListener(View.OnClickListener {
+            if (mBound) {
+                mService?.speakText(editText.text.toString())
             }
-        }
+        })
+
+//        btn_read.setOnClickListener {
+//            if(mBound) {
+//                mService!!.speakText(editText.text.toString())
+//            }
+//        }
     }
+
 }
