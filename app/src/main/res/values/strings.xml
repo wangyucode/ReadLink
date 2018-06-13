@@ -8,4 +8,5 @@
     <string name="hello_main_fragment">读文</string>
     <string name="hello_setting_fragment">设置</string>
     <string name="coding"><![CDATA[</>]]></string>
+    <string name="no_content">暂无播放内容...</string>
 </resources>

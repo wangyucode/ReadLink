@@ -43,7 +43,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        ll_read_text.setOnClickListener { startActivity(Intent(context,TextActivity::class.java)) }
+        ll_read_text.setOnClickListener { startActivity(Intent(context, TextActivity::class.java)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

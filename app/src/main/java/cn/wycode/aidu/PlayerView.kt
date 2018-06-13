@@ -12,6 +12,16 @@ class PlayerView: LinearLayout{
 
     lateinit var view: View
 
+    var isPlaying = false
+        set(value) {
+            field = value
+            if(value) {
+                view.btn_play_or_pause.setBackgroundResource(R.drawable.stop)
+            }else{
+                view.btn_play_or_pause.setBackgroundResource(R.drawable.play)
+            }
+        }
+
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context,attrs)
@@ -27,6 +37,11 @@ class PlayerView: LinearLayout{
 
     fun setContentText(text: String) {
         view.text_content.text = text
+    }
+
+
+    fun setTitleText(text: String){
+        view.text_title.text = text
     }
 
 
