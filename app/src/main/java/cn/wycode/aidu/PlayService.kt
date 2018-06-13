@@ -14,6 +14,8 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import android.widget.Button
+import android.widget.RemoteViews
 import com.baidu.tts.client.*
 
 
@@ -44,11 +46,14 @@ class PlayService : Service(), SpeechSynthesizerListener {
     var currentReadText = ""
     var title = "停止中"
 
+    lateinit var notificationManager: NotificationManagerCompat
+
     init {
         mSpeechSynthesizer.setContext(this)
         mSpeechSynthesizer.setSpeechSynthesizerListener(this) //listener是SpeechSynthesizerListener 的实现类，需要实现您自己的业务逻辑。SDK合成后会对这个类的方法进行回调。
         mSpeechSynthesizer.setAppId(AppId)
         mSpeechSynthesizer.setApiKey(AppKey, AppSecret)
+
     }
 
     inner class PlayServiceBinder : Binder() {
@@ -63,15 +68,22 @@ class PlayService : Service(), SpeechSynthesizerListener {
         return binder
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        stop()
+        notificationManager.cancel(0)
+        return super.onStartCommand(intent, flags, startId)
+    }
+
 
     override fun onCreate() {
         super.onCreate()
+        notificationManager = NotificationManagerCompat.from(this)
         mSpeechSynthesizer.auth(TtsMode.ONLINE)
         mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "4")
         mSpeechSynthesizer.initTts(TtsMode.ONLINE)
     }
 
-    fun speakText(text: String,title:String) {
+    fun speakText(text: String, title: String) {
         this.title = title
         val bags = getBags(text)
         mSpeechSynthesizer.batchSpeak(bags)
@@ -111,6 +123,7 @@ class PlayService : Service(), SpeechSynthesizerListener {
             intent.putExtra(EXTRA_PLAYER_WHAT, EXTRA_PLAYER_WHAT_SPEECH_FINISH)
             localBroadcastManager.sendBroadcast(intent)
             isPlaying = false
+            notificationManager.cancel(0)
         }
     }
 
@@ -132,11 +145,8 @@ class PlayService : Service(), SpeechSynthesizerListener {
         intent.putExtra(EXTRA_PLAYER_PARAM_1, title)
         intent.putExtra(EXTRA_PLAYER_PARAM_2, currentReadText)
         localBroadcastManager.sendBroadcast(intent)
-        if(index==0){
-            showNotification()
-        }
+        showNotification()
     }
-
 
 
     override fun onSynthesizeDataArrived(p0: String?, p1: ByteArray?, p2: Int) {
@@ -150,19 +160,24 @@ class PlayService : Service(), SpeechSynthesizerListener {
 
     private fun showNotification() {
         createNotificationChannel()
-        val stopPendingIntent = PendingIntent.getService(this,0,Intent(this,PlayService::class.java),PendingIntent.FLAG_UPDATE_CURRENT)
-        NotificationCompat.Action.Builder(R.drawable.stop,"停止播放",stopPendingIntent)
+        val notificationView = RemoteViews(packageName, R.layout.view_player_layout)
+        notificationView.setCharSequence(R.id.text_title, "setText", title)
+        notificationView.setCharSequence(R.id.text_content, "setText", currentReadText)
+        notificationView.setInt(R.id.btn_play_or_pause, "setBackgroundResource", R.drawable.stop)
+        val intent = Intent(this, PlayService::class.java).putExtra(EXTRA_PLAYER_WHAT, EXTRA_PLAYER_WHAT_SPEECH_FINISH)
+        val stopPendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        notificationView.setOnClickPendingIntent(R.id.btn_play_or_pause, stopPendingIntent)
+
         val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(title)
-                .setContentText(currentReadText)
-                .addAction(R.drawable.stop,"停止朗读",stopPendingIntent)
-                .setLargeIcon(BitmapFactory.decodeResource(Resources.getSystem(),R.mipmap.ic_launcher))
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(0)
+                .setAutoCancel(false)
+                .setContent(notificationView)
+                .setLargeIcon(BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_launcher))
                 .build()
-
-        val notificationManager = NotificationManagerCompat.from(this)
-
-// notificationId is a unique int for each notification that you must define
+        notification.flags =  NotificationCompat.FLAG_ONGOING_EVENT
+        // notificationId is a unique int for each notification that you must define
         notificationManager.notify(0, notification)
     }
 

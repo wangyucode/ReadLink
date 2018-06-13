@@ -6,7 +6,6 @@ import android.os.IBinder
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -52,7 +51,7 @@ class TextActivity : AppCompatActivity() {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             val binder = service as PlayService.PlayServiceBinder
             mService = binder.getService()
-            if(mService.isPlaying){
+            if (mService.isPlaying) {
                 view_player.setTitleText("播放文字中")
                 view_player.setContentText(mService.currentReadText)
             }
@@ -75,7 +74,6 @@ class TextActivity : AppCompatActivity() {
                 .setTitle("处理中...")
                 .setView(ProgressBar(this))
                 .create()
-
         view_player.setOnPlayOrPauseClickedListener(View.OnClickListener {
             if (mBound) {
                 if (view_player.isPlaying) {
@@ -85,7 +83,7 @@ class TextActivity : AppCompatActivity() {
                         Toast.makeText(this, "没有可以朗读的内容", Toast.LENGTH_SHORT).show();
                         return@OnClickListener
                     }
-                    mService.speakText(editText.text.toString(),"正在朗读文字")
+                    mService.speakText(editText.text.toString(), "正在朗读文字")
                     loadingAlert.show()
                 }
 
