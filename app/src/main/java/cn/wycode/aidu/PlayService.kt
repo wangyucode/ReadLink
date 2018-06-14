@@ -7,6 +7,7 @@ import android.app.Service
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
@@ -70,7 +71,7 @@ class PlayService : Service(), SpeechSynthesizerListener {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         stop()
-        notificationManager.cancel(0)
+
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -108,6 +109,7 @@ class PlayService : Service(), SpeechSynthesizerListener {
         intent.putExtra(EXTRA_PLAYER_WHAT, EXTRA_PLAYER_WHAT_SPEECH_FINISH)
         localBroadcastManager.sendBroadcast(intent)
         isPlaying = false
+        notificationManager.cancel(0)
     }
 
 
@@ -154,7 +156,7 @@ class PlayService : Service(), SpeechSynthesizerListener {
     }
 
     override fun onError(p0: String?, p1: SpeechError?) {
-        Log.d("wy", "onError-->$p0,$p1")
+        Log.e("wy", "onError-->$p0,$p1")
     }
 
 
@@ -170,13 +172,15 @@ class PlayService : Service(), SpeechSynthesizerListener {
 
         val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setDefaults(0)
+                .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                 .setAutoCancel(false)
+                .setOnlyAlertOnce(true)
+                .setOngoing(true)
+                .setSound(null)
                 .setContent(notificationView)
                 .setLargeIcon(BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_launcher))
                 .build()
-        notification.flags =  NotificationCompat.FLAG_ONGOING_EVENT
+
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(0, notification)
     }
@@ -188,9 +192,10 @@ class PlayService : Service(), SpeechSynthesizerListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "播放状态"
             val description = "显示AI读文的播放状态，并可以在通知栏直接停止播放"
-            val importance = NotificationManager.IMPORTANCE_HIGH
+            val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance)
             channel.description = description
+            channel.setSound(null,null)
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             val notificationManager = getSystemService(NotificationManager::class.java)
