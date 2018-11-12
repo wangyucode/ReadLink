@@ -80,7 +80,6 @@ class PlayService : Service(), SpeechSynthesizerListener {
         super.onCreate()
         notificationManager = NotificationManagerCompat.from(this)
         mSpeechSynthesizer.auth(TtsMode.ONLINE)
-        mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "4")
         mSpeechSynthesizer.initTts(TtsMode.ONLINE)
     }
 
