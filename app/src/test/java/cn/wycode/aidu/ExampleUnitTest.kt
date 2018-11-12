@@ -12,6 +12,8 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val regex = "^(https|http)://.*".toRegex()
+        val address = "http://www.runoob.com/regexp/regexp-tutorial.html"
+        assert(address.matches(regex))
     }
 }

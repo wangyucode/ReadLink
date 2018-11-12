@@ -48,6 +48,7 @@
         android:layout_weight="1" />
 
     <cn.wycode.aidu.PlayerView
+        android:id="@+id/view_player_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
