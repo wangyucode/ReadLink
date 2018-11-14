@@ -78,6 +78,7 @@
         android:orientation="horizontal">
         <!--第三块-->
         <LinearLayout
+            android:id="@+id/ll_subscription"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

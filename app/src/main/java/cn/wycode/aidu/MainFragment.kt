@@ -45,6 +45,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         ll_read_text.setOnClickListener { startActivity(Intent(context, TextActivity::class.java)) }
         ll_read_link.setOnClickListener { startActivity(Intent(context, WebLinkActivity::class.java)) }
+        ll_subscription.setOnClickListener { startActivity(Intent(context, SubscriptionActivity::class.java)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
